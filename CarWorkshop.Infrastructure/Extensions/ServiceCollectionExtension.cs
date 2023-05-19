@@ -1,0 +1,37 @@
+﻿using CarWorkshop.Domain.Interfaces;
+using CarWorkshop.Infrastructure.Persistence;
+using CarWorkshop.Infrastructure.Repositories;
+using CarWorkshop.Infrastructure.Seeders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarWorkshop.Infrastructure.Extensions
+{
+    public static class ServiceCollectionExtension
+    {
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<CarWorkshopDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("CarWorkshop")));
+
+            services.AddDefaultIdentity<IdentityUser>(options => {
+                options.Stores.MaxLengthForKeys = 450;
+            })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<CarWorkshopDbContext>();
+
+            // singleton - zarejestruje obiekt, ktory bedzie zyl przez caly czas trwania aplikacji
+            // scoped - zarejestruj obiekt tylko na czas trwania konkretnego zapytania 
+            // transient - zarejestruje obiekt, ktory bedzie tworzony na nowo, za kazdym razem, kiedy do niego wrocimy
+            services.AddScoped<CarWorkshopSeeder>();
+
+            services.AddScoped<ICarWorkshopRepository, CarWorkshopRepository>();
+        }
+    }
+}
