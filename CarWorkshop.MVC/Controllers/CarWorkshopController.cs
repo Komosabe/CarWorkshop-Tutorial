@@ -11,6 +11,7 @@ using CarWorkshop.MVC.Models;
 using Newtonsoft.Json;
 using CarWorkshop.MVC.Extensions;
 using CarWorkshop.Application.CarWorkshopService.Commands;
+using CarWorkshop.Application.CarWorkshopService.Queries.GetCarWorkshopServices;
 
 namespace CarWorkshop.MVC.Controllers
 {
@@ -101,6 +102,14 @@ namespace CarWorkshop.MVC.Controllers
             await _mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("CarWorkshop/{encodedName}/CarWorkshopService")]
+        public async Task<IActionResult> GetCarWorkshopServices(string encodedName)
+        {
+            var data = await _mediator.Send(new GetCarWorkshopServicesQuery() { EncodedName = encodedName });
+            return Ok(data);
         }
     }
 }
