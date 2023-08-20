@@ -19,7 +19,7 @@ namespace CarWorkshop.Domain.Entities
 
         public string? CreatedById { get; set; }
         public IdentityUser? CreatedBy { get; set; }
-
+          
         public string EncodedName { get; private set; } = default!; // private, bo bedzie sama decydowac
         public List<CarWorkshopService> Services { get; set; } = new();
         
