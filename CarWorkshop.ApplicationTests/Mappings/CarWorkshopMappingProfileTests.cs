@@ -78,11 +78,10 @@ namespace CarWorkshop.Application.Mappings.Tests
             // assert
             result.Should().NotBeNull();
             result.IsEditable.Should().BeTrue();
-            result.ContactDetails.Should().NotBeNull();
-            result.ContactDetails.City.Should().Be(dto.City);
-            result.ContactDetails.PhoneNumber.Should().Be(dto.PhoneNumber);
-            result.ContactDetails.PostalCode.Should().Be(dto.PostalCode);
-            result.ContactDetails.PostalCode.Should().Be(dto.Street);
+            result.Street.Should().Be(carWorkshop.ContactDetails.Street);
+            result.PostalCode.Should().Be(carWorkshop.ContactDetails.PostalCode);
+            result.City.Should().Be(carWorkshop.ContactDetails.City);
+            result.PhoneNumber.Should().Be(carWorkshop.ContactDetails.PhoneNumber);
         }
     }   
 }
